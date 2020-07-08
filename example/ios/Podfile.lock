@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - paytm_flutter (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - paytm_flutter (from `.symlinks/plugins/paytm_flutter/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  paytm_flutter:
+    :path: ".symlinks/plugins/paytm_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  paytm_flutter: eebf736b1729aee69b4f109ccdb8a762258015dc
+
+PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
+
+COCOAPODS: 1.9.3
