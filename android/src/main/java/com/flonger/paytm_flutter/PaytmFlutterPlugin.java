@@ -1,5 +1,6 @@
 package com.flonger.paytm_flutter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +70,7 @@ public class PaytmFlutterPlugin implements FlutterPlugin, MethodCallHandler {
   }
 
   public void showPaytm(@NonNull HashMap orderMap){
-    Log.e("showPaytm: ", orderMap.get("aaa").toString());
+    Log.e("showPaytm: ", orderMap.toString());
     PaytmOrder Order = new PaytmOrder(orderMap);
     PaytmPGService paytmPGService;
     if (BuildConfig.DEBUG){
@@ -77,7 +80,7 @@ public class PaytmFlutterPlugin implements FlutterPlugin, MethodCallHandler {
       paytmPGService = PaytmPGService.getProductionService();
     }
     paytmPGService.initialize(Order, null);
-    paytmPGService.startPaymentTransaction(context, true, true, new PaytmPaymentTransactionCallback() {
+    paytmPGService.startPaymentTransaction(getActivity(), true, true, new PaytmPaymentTransactionCallback() {
       @Override
       public void onTransactionResponse(Bundle inResponse) {
         _result.success("success"+inResponse.toString());
@@ -114,8 +117,39 @@ public class PaytmFlutterPlugin implements FlutterPlugin, MethodCallHandler {
       }
     });
 
+  }
 
-
+  public static Activity getActivity() {
+    Class activityThreadClass = null;
+    try {
+      activityThreadClass = Class.forName("android.app.ActivityThread");
+      Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
+      Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
+      activitiesField.setAccessible(true);
+      Map activities = (Map) activitiesField.get(activityThread);
+      for (Object activityRecord : activities.values()) {
+        Class activityRecordClass = activityRecord.getClass();
+        Field pausedField = activityRecordClass.getDeclaredField("paused");
+        pausedField.setAccessible(true);
+        if (!pausedField.getBoolean(activityRecord)) {
+          Field activityField = activityRecordClass.getDeclaredField("activity");
+          activityField.setAccessible(true);
+          Activity activity = (Activity) activityField.get(activityRecord);
+          return activity;
+        }
+      }
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchFieldException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
 
