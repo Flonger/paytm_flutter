@@ -2,30 +2,30 @@
 #import "PaymentsSDK.h"
 
 //判断手机型号
-#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
-#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
-#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
-#define IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
-#define IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
-#define IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
-#define IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
-#define IPHONE_X ((IS_IPHONE && SCREEN_MAX_LENGTH == 812.0) || (IS_IPHONE && SCREEN_MAX_LENGTH == 896.0))
-#define IPHONE_XSMaxAndXR (IS_IPHONE && SCREEN_MAX_LENGTH == 896.0)
+#define p_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define p_SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define p_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define p_SCREEN_MAX_LENGTH (MAX(p_SCREEN_WIDTH, p_SCREEN_HEIGHT))
+#define p_IPHONE_4_OR_LESS (p_IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define p_IPHONE_5 (p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 568.0)
+#define p_IPHONE_6 (p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 667.0)
+#define p_IPHONE_6P (p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 736.0)
+#define p_IPHONE_X ((p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 812.0) || (p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 896.0))
+#define p_IPHONE_XSMaxAndXR (p_IS_IPHONE && p_SCREEN_MAX_LENGTH == 896.0)
 
 #pragma mark 屏幕尺寸相关
-#define kScreenW [UIScreen mainScreen].bounds.size.width
-#define kScreenH [UIScreen mainScreen].bounds.size.height
-#define kSafeAreaTopHeight  ((kScreenH == 812.0) || (kScreenH == 896.0) ? 88 : 64)
-#define kSafeAreaTopHeightS  ((kScreenH == 812.0) || (kScreenH == 896.0) ? 44 : 20)
-#define kSafeAreaBottomHeight ((kScreenH == 812.0) || (kScreenH == 896.0) ? 34 : 0)
+#define p_kScreenW [UIScreen mainScreen].bounds.size.width
+#define p_kScreenH [UIScreen mainScreen].bounds.size.height
+#define p_kSafeAreaTopHeight  ((p_kScreenH == 812.0) || (p_kScreenH == 896.0) ? 88 : 64)
+#define p_kSafeAreaTopHeightS  ((p_kScreenH == 812.0) || (p_kScreenH == 896.0) ? 44 : 20)
+#define p_kSafeAreaBottomHeight ((p_kScreenH == 812.0) || (p_kScreenH == 896.0) ? 34 : 0)
 
 // 屏幕尺寸
-#define kScreemSize [UIScreen mainScreen].bounds.size
-#define kScaleX(x) kScreemSize.width * ((x) / 375.0)
-#define kScaleY(y)  (IPHONE_5 ? kScreemSize.height * ((y) / 667.0) : IPHONE_6 ? kScreemSize.height * ((y) / 667.0) : IPHONE_6P ? kScreemSize.height * ((y) / 667.0) : kScreemSize.height * ((y) / 812.0))
+#define p_kScreemSize [UIScreen mainScreen].bounds.size
+#define p_kScaleX(x) p_kScreemSize.width * ((x) / 375.0)
+#define p_kScaleY(y)  (p_IPHONE_5 ? p_kScreemSize.height * ((y) / 667.0) : p_IPHONE_6 ? p_kScreemSize.height * ((y) / 667.0) : p_IPHONE_6P ? p_kScreemSize.height * ((y) / 667.0) : p_kScreemSize.height * ((y) / 812.0))
 
-#define HEIGHT_64 ([[UIScreen mainScreen] bounds].size.height - 64)
+#define p_HEIGHT_64 ([[UIScreen mainScreen] bounds].size.height - 64)
 
 @interface PaytmFlutterPlugin ()<PGTransactionDelegate>
 @property (nonatomic,copy)NSString * returnUrl;
@@ -100,10 +100,10 @@
     txnController.merchant = [PGMerchantConfiguration defaultConfiguration];
     txnController.delegate = self;
     
-    UIView * topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenW, kSafeAreaTopHeight)];
+    UIView * topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, p_kScreenW, p_kSafeAreaTopHeight)];
 //    topBar.backgroundColor = HEXCOLOR(0x3960B1);
     txnController.topBar = topBar;
-    UIButton *cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(kScaleX(7), kSafeAreaTopHeightS, kScaleX(40), kScaleY(40))];
+    UIButton *cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(p_kScaleX(7), p_kSafeAreaTopHeightS, p_kScaleX(40), p_kScaleY(40))];
     [cancelButton setImage:[UIImage imageNamed:@"nav返回"] forState:UIControlStateNormal];
     txnController.cancelButton = cancelButton;
 
